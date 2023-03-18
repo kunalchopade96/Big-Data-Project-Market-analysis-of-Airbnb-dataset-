@@ -1,0 +1,43 @@
+# This is a basic workflow to help you get started with Actions
+
+name: Data Dump in S3 Bucket
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the "main" branch
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      
+      - name: Configure AWS credentials
+        id: creds
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ASIA3CD7J7UJIB5DLNKC
+          aws-secret-access-key: CIHADZj4NMgCX0PuNeUt/vziYTYv0m4n9KjQAky4
+          aws-session-token: FwoGZXIvYXdzEIf//////////wEaDEaB4ItVeeX3dvBqIyK+AY/tTyhMVv2+p/Sr/DcM9QpxQ33Ov3xU8rCXt/j+bu+fyYZNBQyvKfyKjBajEsTht+WhWXmIGs6qqHoP9vUzgy6IeAfExPLtDPyMwJRfMKyQZVkkGN6kzJha7MUhudKYFU/n8k+3QN04tcIiFHe4bqt/MU16y7D5OychQse0iJOY7UfAm6H+TOjhoERpI18slL0TiGAb2EB05Ou9VbmHBI8tgbYbcQg1EbrznX84FE+udVu2f3jCePR2Vz/uaUoopZ3VoAYyLZpi+UwgD839pQ2YHFkIdqL6RVD+w8bz8GVmHbVDxwuz6KKUDX9tPOio+5h3sQ==
+          aws-region: 'us-east-1' 
+
+   
+
+      # Runs a  single commands using the runners shell
+      - name: upload to s3
+        run: aws s3 cp s3://kbigdata/data/total_data.csv s3://kunalprojectin/
